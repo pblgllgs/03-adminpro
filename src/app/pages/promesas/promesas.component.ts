@@ -12,23 +12,17 @@ export class PromesasComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-    const promesa = new Promise((resolve, reject) =>{
-      if(false){
-        resolve('Hola mundo')
-      }else{
-        reject ('algo salio mal')
-      }
-      
-
+    this.getUsuarios().then( usuarios => {
+      console.log(usuarios);
     });
+  }
 
-    promesa.then( (mensaje) => {
-      console.log(mensaje)
-    })
-    .catch( err => console.log('Error en mi promesa,', err))
-
-    console.log('fin del init');
+  getUsuarios(){
+    return new Promise(resolve => {
+      fetch('https://reqres.in/api/users')
+        .then( resp => resp.json())
+        .then( body => resolve(body.data))
+      });
   }
 
 }
