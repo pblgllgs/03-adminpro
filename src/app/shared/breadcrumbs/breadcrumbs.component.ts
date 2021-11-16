@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+export interface IBreadCrumb {
+  label: string;
+  url: string;
+}
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -6,11 +12,8 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class BreadcrumbsComponent implements OnInit {
+export class BreadcrumbsComponent{
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
   }
-
 }
