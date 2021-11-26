@@ -28,7 +28,8 @@
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <input class="form-control" type="password" placeholder="Confirm Password" formControlName="passwordVerify" />
+                        <input class="form-control" type="password" placeholder="Confirm Password"
+                            formControlName="passwordVerify" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -40,13 +41,29 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col text-danger">
+                        <p *ngIf="campoNoValido('nombre')">*El nombre es obligatorio</p>
+                        <p *ngIf="campoNoValido('email')">
+                            *EL email no es valido
+                        </p>
+                        <p *ngIf="aceptaTerminos()">
+                            *Debe aceptar los terminos de uso
+                        </p>
+                        <p *ngIf="passwordNoValidas()">
+                            *Las contraseñas deben ser iguales
+                        </p>
+                    </div>
+                </div>
+
                 <div class="form-group text-center m-t-20">
                     <div class="col-xs-12">
                         <button class="
-                                btn btn-info btn-lg btn-block
-                                text-uppercase
-                                waves-effect waves-light
-                              " type="submit">
+                                    btn btn-info btn-lg btn-block
+                                    text-uppercase
+                                    waves-effect waves-light
+                                  " type="submit">
                             Sign Up
                         </button>
                     </div>
@@ -59,6 +76,15 @@
                         </p>
                     </div>
                 </div>
+                <!-- <h5>Form valid, Es valido?: {{registerForm.valid}}</h5>
+                <h5>Form status, Esta OK?: {{registerForm.status}}</h5>
+                <h5>Form pending, Esta pendiente?: {{registerForm.pending}}</h5>
+                <h5>Form errors {{registerForm.errors | json}}</h5>
+                <h5>Nombre {{registerForm.controls.nombre.errors | json}}</h5>
+                <h5>Email {{registerForm.controls.email.errors | json}}</h5>
+                <h5>Password {{registerForm.controls.password.errors | json}}</h5>
+                <h5>Confirmar Password {{registerForm.controls.passwordVerify.errors | json}}</h5>
+                <h5>Terminos {{registerForm.controls.terminos.errors | json}}</h5> -->
             </form>
         </div>
     </div>
