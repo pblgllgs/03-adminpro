@@ -6,6 +6,7 @@ import { LoginForm } from '../interfaces/login-form.interface';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { Usuario } from '../models/usuario.model';
 
 const baseUrl = environment.base_url;
 declare const gapi: any;
@@ -16,6 +17,7 @@ declare const gapi: any;
 export class UsuarioService {
 
   public auth2: any;
+  public usuario:Usuario;
 
   constructor(
     private http: HttpClient,
@@ -44,7 +46,15 @@ export class UsuarioService {
     }).pipe(
       tap((resp: any) => {
         localStorage.setItem('token', resp.token);
+        const {nombre,email,img,role,google,uid} = resp.usuario;
+        this.usuario = new Usuario(nombre,email,'',img,role,google,uid);
       }),
+      /* map((resp:any) => {
+        const { email, google, nombre, role, img , uid } = resp.usuario;
+        this.usuario = new Usuario( nombre, email, '', img, google, role, uid );
+        localStorage.setItem('token', resp.token );
+        return true;
+      }), */
       map(resp => true),
       catchError(error => of(false))
     );
@@ -60,7 +70,7 @@ export class UsuarioService {
       .pipe(
         map((resp: any) => {
           localStorage.setItem('token', resp.token);
-          console.log(resp.token)
+          console.log(resp.token);
         })
       );
   }
