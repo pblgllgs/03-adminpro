@@ -90,6 +90,13 @@ export class LoginComponent implements OnInit {
           .subscribe(resp => {
             this.ngZone.run(() =>{
               this.router.navigateByUrl('/');
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Session iniciada con éxito!!',
+                showConfirmButton: false,
+                timer: 1500
+              });
             });
           });
 
