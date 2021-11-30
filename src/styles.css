@@ -7,14 +7,19 @@
     animation-fill-mode: both;
 }
 
-#themecolors .selector, .cursor{
+#themecolors .selector,
+.cursor {
     cursor: pointer;
 }
 
-#google-btn{
+#google-btn {
     align-items: center;
     display: flex;
     justify-content: center;
     text-align: center;
 }
 
+.img-avatar {
+    width: 200px;
+    height: 200px;
+}

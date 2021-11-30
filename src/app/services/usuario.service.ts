@@ -11,6 +11,11 @@ import { Usuario } from '../models/usuario.model';
 const baseUrl = environment.base_url;
 declare const gapi: any;
 
+/* interface PerfilForm{
+  nombre:string,
+  email:string
+} */
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +31,13 @@ export class UsuarioService {
     this.googleInit();
   }
 
+  get token(): string{
+    return localStorage.getItem('token') || '';
+  }
+
+  get uid():string{
+    return this.usuario.uid || '';
+  }
   googleInit() {
     gapi.load('auth2', () => {
       // Retrieve the singleton for the GoogleAuth library and set up the client.
@@ -36,12 +48,10 @@ export class UsuarioService {
     });
   }
 
-
   validarToken(): Observable<boolean> {
-    const token = localStorage.getItem('token') || '';
     return this.http.get(`${baseUrl}/login/renew`, {
       headers: {
-        'x-token': token
+        'x-token': this.token
       }
     }).pipe(
       tap((resp: any) => {
@@ -61,6 +71,18 @@ export class UsuarioService {
 
   crearUsuario(formData: RegisterForm) {
     return this.http.post(`${baseUrl}/usuarios/new`, formData);
+  }
+
+  actualizarPerfil(formData:{nombre:string, email:string, role:string}){
+    formData = {
+      ...formData,
+      role: this.usuario.role!
+    };
+    return this.http.put(`${baseUrl}/usuarios/${this.uid}`, formData,{
+      headers: {
+        'x-token': this.token
+      }
+    });
   }
 
   login(formData: LoginForm) {
