@@ -31,7 +31,7 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     this.perfilForm = this.fb.group({
-      nombre: [this.usuario.nombre,[Validators.required, Validators.minLength(4)]],
+      nombre: [this.usuario.nombre,[Validators.required, Validators.minLength(4), Validators.pattern(this.validator.nombrePattern)]],
       email: [this.usuario.email,[Validators.required,Validators.pattern(this.validator.emailPattern)]]
     });
   }
@@ -46,6 +46,17 @@ export class PerfilComponent implements OnInit {
       return 'el email es obligatorio';
     }else if(errors?.pattern){
       return 'El formato del correo no es valido';
+    }
+    return '';
+  }
+
+  get nombreErrorMsg():string{
+    const errors = this.perfilForm.get('nombre')?.errors;
+    console.log(errors.pattern)
+    if(errors?.required){
+      return 'el nombre es obligatorio';
+    }else if(errors?.pattern){
+      return 'El formato del nombre no es correcto';
     }
     return '';
   }

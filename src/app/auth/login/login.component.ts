@@ -40,13 +40,28 @@ export class LoginComponent implements OnInit {
           localStorage.removeItem('email');
         }
         this.router.navigateByUrl('/');
-        Swal.fire({
+        /* Swal.fire({
           position: 'top-end',
           icon: 'success',
           title: 'Session iniciada con éxito!!',
           showConfirmButton: false,
           timer: 1500
+        }); */
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
         });
+        Toast.fire({
+          icon: 'success',
+          title: `Bienvenido`
+        })
       }, (err) => {
         Swal.fire({
           icon: 'error',
@@ -90,13 +105,21 @@ export class LoginComponent implements OnInit {
           .subscribe(resp => {
             this.ngZone.run(() =>{
               this.router.navigateByUrl('/');
-              Swal.fire({
+              const Toast = Swal.mixin({
+                toast: true,
                 position: 'top-end',
-                icon: 'success',
-                title: 'Session iniciada con éxito!!',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
               });
+              Toast.fire({
+                icon: 'success',
+                title: `Bienvenido`
+              })
             });
           });
 
