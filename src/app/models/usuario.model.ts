@@ -1,4 +1,4 @@
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
 
 const base_url = environment.base_url;
 export class Usuario {
@@ -13,13 +13,15 @@ export class Usuario {
     ) {}
 
     get imageUrl(){
-        if(this.img?.includes('https')){
+
+        if(!this.img){
+            return `${base_url}/upload/usuarios/no-img`;
+        }else if(this.img?.includes('https')){
             return this.img;
-        }
-        if(this.img){
-            return `${base_url}/upload/usuarios/${this.img}`
+        }else if(this.img){
+            return `${base_url}/upload/usuarios/${this.img}`;
         }else{
-            return `${base_url}/upload/usuarios/no-img.png`
+            return `${base_url}/upload/usuarios/no-img`;
         }
     }
     

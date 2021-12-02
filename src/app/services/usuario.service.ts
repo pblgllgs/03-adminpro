@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
+import { ResponseUsuarios } from '../interfaces/ResponseUsuarios';
 
 const baseUrl = environment.base_url;
 declare const gapi: any;
@@ -38,6 +39,15 @@ export class UsuarioService {
   get uid():string{
     return this.usuario.uid || '';
   }
+
+  get headers(){
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
+  }
+
   googleInit() {
     gapi.load('auth2', () => {
       // Retrieve the singleton for the GoogleAuth library and set up the client.
@@ -91,7 +101,6 @@ export class UsuarioService {
       .pipe(
         map((resp: any) => {
           localStorage.setItem('token', resp.token);
-          console.log(resp.token);
         })
       );
   }
@@ -112,6 +121,25 @@ export class UsuarioService {
         this.router.navigateByUrl('/login');
       });
     });
+  }
+
+  cargarUsuarios(desde:number = 0){
+    const url = `${baseUrl}/usuarios?desde=${desde}`;
+    return this.http.get<ResponseUsuarios>(url, this.headers)
+      .pipe(
+        map(resp => {
+          const usuarios = resp.usuarios.map(user => new Usuario(user.nombre,user.email,'',user.img,user.google,user.role,user.uid));
+          return {
+            usuarios,
+            total: resp.total
+          };
+        })
+      )
+  }
+
+  eliminarUsuario(usuario:Usuario){
+    const url = `${baseUrl}/usuarios/${usuario.uid}`
+    return this.http.delete(url,this.headers);
   }
 
 }
