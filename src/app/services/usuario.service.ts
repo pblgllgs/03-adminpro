@@ -12,11 +12,6 @@ import { ResponseUsuarios } from '../interfaces/ResponseUsuarios';
 const baseUrl = environment.base_url;
 declare const gapi: any;
 
-/* interface PerfilForm{
-  nombre:string,
-  email:string
-} */
-
 @Injectable({
   providedIn: 'root'
 })
@@ -83,16 +78,12 @@ export class UsuarioService {
     return this.http.post(`${baseUrl}/usuarios/new`, formData);
   }
 
-  actualizarPerfil(formData:{nombre:string, email:string, role:string}){
-    formData = {
-      ...formData,
-      role: this.usuario.role!
+  actualizarPerfil(data:{nombre:string, email:string, role:string}){
+    data = {
+      ...data,
+      role: this.usuario.role
     };
-    return this.http.put(`${baseUrl}/usuarios/${this.uid}`, formData,{
-      headers: {
-        'x-token': this.token
-      }
-    });
+    return this.http.put(`${baseUrl}/usuarios/${this.uid}`, data,this.headers);
   }
 
   login(formData: LoginForm) {
@@ -140,6 +131,11 @@ export class UsuarioService {
   eliminarUsuario(usuario:Usuario){
     const url = `${baseUrl}/usuarios/${usuario.uid}`
     return this.http.delete(url,this.headers);
+  }
+
+  guardarUsuario(usuario:Usuario){
+    
+    return this.http.put(`${baseUrl}/usuarios/${usuario.uid}`, usuario,this.headers);
   }
 
 }
