@@ -28,7 +28,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   constructor(
     private usuarioService: UsuarioService,
-    private busquedasSerice: BusquedasService,
+    private busquedasService: BusquedasService,
     private toastService: ToastService,
     private modalImageService:ModalImagenService,
     private fus:FileUploadService) { }
@@ -79,7 +79,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     if (termino.length === 0) {
       return this.usuarios = this.usuariosTemp;
     }
-    this.busquedasSerice.buscar('usuarios', termino)
+    this.busquedasService.buscar('usuarios', termino)
       .subscribe(resp => {
         this.usuarios = resp;
       });

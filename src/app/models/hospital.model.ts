@@ -4,14 +4,12 @@ import { environment } from '../../environments/environment';
 const base_url = environment.base_url;
 
 export class Hospital {
-
     constructor(
         public nombre: string,
         public usuario: Usuario,
         public img:string,
         public id:string
         ) {
-
     }
 
     get imageUrl(){

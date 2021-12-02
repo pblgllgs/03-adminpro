@@ -28,19 +28,19 @@ export class BusquedasService {
     }
   }
 
-  private tranformUsuarios(resultados: any[]): Usuario[] {
+  private transformUsuarios(resultados: any[]): Usuario[] {
     return resultados.map(
       user => new Usuario(user.nombre, user.email, '', user.img, user.google, user.role, user.uid)
     );
   }
 
-  private tranformMedicos(resultados: any[]): Medico[] {
+  private transformMedicos(resultados: any[]): Medico[] {
     return resultados.map(
       medico => new Medico(medico.nombre, medico.hospital,medico.img ,medico.id)
     );
   }
 
-  private tranformHospitales(resultados: any[]): Hospital[] {
+  private transformHospitales(resultados: any[]): Hospital[] {
     return resultados.map(
       hospital => new Hospital(hospital.nombre,hospital.usuario,hospital.img, hospital.id)
     );
@@ -56,14 +56,14 @@ export class BusquedasService {
           (resp: any) => {
             switch (tipo) {
               case 'usuarios':
-                return this.tranformUsuarios(resp.resultados);
+                return this.transformUsuarios(resp.resultados);
                 break;
-              case 'medicos':
-                return this.tranformMedicos(resp.resultados);
+              /* case 'medicos':
+                return this.transformMedicos(resp.resultados);
                 break;
               case 'hospitales':
-                return this.tranformHospitales(resp.resultados);
-                break;
+                return this.transformHospitales(resp.resultados);
+                break; */
               default:
                 return [];
             }
