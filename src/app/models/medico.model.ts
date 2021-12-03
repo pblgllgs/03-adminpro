@@ -1,29 +1,16 @@
-import { environment } from '../../environments/environment';
 import { Hospital } from './hospital.model';
-import { Usuario } from './usuario.model';
-
-const base_url = environment.base_url;
-
+interface _MedicoUser{
+    nombre:string,
+    _id:string,
+    img:string
+}
 export class Medico {
     constructor(
         public nombre:string,
-        public usuario:Usuario,
-        public hospital:Hospital,
+        public _id?:string,
         public img?:string,
-        public uid?:string
+        public usuario?:_MedicoUser,
+        public hospital?:Hospital,
     ) {}
-
-    get imageUrl(){
-
-        if(!this.img){
-            return `${base_url}/upload/medicos/no-img`;
-        }else if(this.img?.includes('https')){
-            return this.img;
-        }else if(this.img){
-            return `${base_url}/upload/medicos/${this.img}`;
-        }else{
-            return `${base_url}/upload/medicos/no-img`;
-        }
-    }
     
 }

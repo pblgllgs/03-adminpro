@@ -30,8 +30,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     private usuarioService: UsuarioService,
     private busquedasService: BusquedasService,
     private toastService: ToastService,
-    private modalImageService:ModalImagenService,
-    private fus:FileUploadService) { }
+    private modalImageService:ModalImagenService) { }
 
   ngOnDestroy(): void {
     this.imgSubs.unsubscribe;
@@ -80,7 +79,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       return this.usuarios = this.usuariosTemp;
     }
     this.busquedasService.buscar('usuarios', termino)
-      .subscribe(resp => {
+      .subscribe((resp:Usuario[]) => {
         this.usuarios = resp;
       });
   }

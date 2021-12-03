@@ -28,42 +28,34 @@ export class BusquedasService {
     }
   }
 
-  private transformUsuarios(resultados: any[]): Usuario[] {
+  /* private transform(resultados: any[]): Usuario[] {
     return resultados.map(
       user => new Usuario(user.nombre, user.email, '', user.img, user.google, user.role, user.uid)
     );
-  }
-
-  private transformMedicos(resultados: any[]): Medico[] {
-    return resultados.map(
-      medico => new Medico(medico.nombre, medico.hospital,medico.img ,medico.id)
-    );
-  }
-
-  private transformHospitales(resultados: any[]): Hospital[] {
-    return resultados.map(
-      hospital => new Hospital(hospital.nombre,hospital.usuario,hospital.img, hospital.id)
-    );
-  }
+  } */
 
   buscar(
     tipo: 'usuarios' | 'medicos' | 'hospitales',
     termino: string) {
     const url = `${baseUrl}/todo/coleccion/${tipo}/${termino}`;
-    return this.http.get<any[]>(url, this.headers)
+    return this.http.get<Usuario[] | Medico[] | Hospital[]>(url, this.headers)
       .pipe(
         map(
           (resp: any) => {
             switch (tipo) {
               case 'usuarios':
-                return this.transformUsuarios(resp.resultados);
-                break;
-              /* case 'medicos':
-                return this.transformMedicos(resp.resultados);
-                break;
+                return resp.resultados.map(
+                  user => new Usuario(user.nombre, user.email, '', user.img, user.google, user.role, user.uid)
+                );
+              case 'medicos':
+                return resp.resultados.map(
+                  medico => new Medico(medico.nombre, medico.hospital, medico.img, medico.id)
+                );
               case 'hospitales':
-                return this.transformHospitales(resp.resultados);
-                break; */
+                return resp.resultados.map(
+                  hospital => new Hospital(hospital.nombre, hospital.usuario, hospital.img, hospital.id)
+                );
+                break;
               default:
                 return [];
             }
