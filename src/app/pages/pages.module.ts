@@ -5,6 +5,7 @@ import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 import { ProgressComponent } from './progress/progress.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -17,7 +18,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
 import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
-import { PipesModule } from '../pipes/pipes.module';
+import { MedicoComponent } from './mantenimientos/medicos/medico.component';
 
 
 
@@ -33,7 +34,8 @@ import { PipesModule } from '../pipes/pipes.module';
     PerfilComponent,
     UsuariosComponent,
     HospitalesComponent,
-    MedicosComponent
+    MedicosComponent,
+    MedicoComponent
   ],
   imports: [
     CommonModule,
