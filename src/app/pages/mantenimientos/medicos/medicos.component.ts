@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Medico } from '../../../models/medico.model';
 import { MedicoService } from '../../../services/medico.service';
 import Swal from 'sweetalert2';
@@ -7,6 +7,7 @@ import { delay } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { ModalImageComponent } from '../../../components/modal-image/modal-image.component';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
+import { BusquedasService } from '../../../services/busquedas.service';
 
 @Component({
   selector: 'app-medicos',
@@ -14,7 +15,7 @@ import { ModalImagenService } from '../../../services/modal-imagen.service';
   styles: [
   ]
 })
-export class MedicosComponent implements OnInit {
+export class MedicosComponent implements OnInit, OnDestroy {
 
   public medicos:Medico[]= [];
   public medicosTemp:Medico[]= [];
@@ -24,7 +25,8 @@ export class MedicosComponent implements OnInit {
   constructor(
     private medicoService:MedicoService,
     private toast:ToastService,
-    private modalImageService:ModalImagenService
+    private modalImageService:ModalImagenService,
+    private busquedasService:BusquedasService
   ) { }
 
   ngOnInit(): void {
@@ -36,8 +38,11 @@ export class MedicosComponent implements OnInit {
       .subscribe(
         img => {
           this.cargarMedicos();
-          
         });
+  }
+
+  ngOnDestroy(): void {
+    this.imgSubs.unsubscribe;
   }
 
   cargarMedicos() {
@@ -45,10 +50,7 @@ export class MedicosComponent implements OnInit {
     this.medicoService.cargarMedicos()
       .subscribe(medicos => {
         this.cargando = false;
-        if (medicos.length !== 0) {
-          this.medicos = medicos;
-        }
-        this.medicosTemp = medicos;
+        this.medicos = medicos;
       })
   }
 
@@ -63,7 +65,7 @@ export class MedicosComponent implements OnInit {
       confirmButtonText: 'Si, borrar!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.medicoService.borrarMedico(medico._id)
+        this.medicoService.eliminarMedico(medico._id)
           .subscribe(
             (resp) => {
               this.toast.toast('success', 'Medico eliminado');
@@ -79,6 +81,17 @@ export class MedicosComponent implements OnInit {
 
   abrirModal(medico:Medico){
     this.modalImageService.abrirModal('medicos',medico._id,medico.img);
+  }
+
+  buscar(termino: string) {
+    if (termino.length === 0) {
+      //return this.medicos = this.medicosTemp;
+      return this.cargarMedicos();
+    }
+    this.busquedasService.buscar('medicos', termino)
+      .subscribe((resp:Medico[]) => {
+        this.medicos = resp;
+      });
   }
 
 }

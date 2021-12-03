@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { ResponseMedico } from '../interfaces/ResponseMedico';
 import { Hospital } from '../models/hospital.model';
 import { environment } from 'src/environments/environment';
+import { Medico } from '../models/medico.model';
 
 const baseUrl = environment.base_url;
 
@@ -37,18 +38,23 @@ export class MedicoService {
       );
   }
 
-  crearMedico(nombre:string, hospital:Hospital){
+  crearMedico(medico:{nombre:string, hospital:string}){
     const url = `${baseUrl}/medicos/new`;
-    return this.http.post<ResponseMedico>(url,{nombre, hospital}, this.headers)
+    return this.http.post<ResponseMedico>(url,medico, this.headers)
   }
 
-  actualizarMedico(_id:string, nombre:string, hospital:Hospital){
-    const url = `${baseUrl}/medicos/${_id}`;
-    return this.http.put<ResponseMedico>(url,{nombre, hospital}, this.headers)
+  actualizarMedico(medico:Medico){
+    const url = `${baseUrl}/medicos/${medico._id}`;
+    return this.http.put<ResponseMedico>(url,medico, this.headers)
   }
 
-  borrarMedico(_id:string){
+  eliminarMedico(_id:string){
     const url = `${baseUrl}/medicos/${_id}`;
     return this.http.delete(url, this.headers)
+  }
+
+  buscarMedicoById(_id:string){
+    const url = `${baseUrl}/medicos/${_id}`;
+    return this.http.get<ResponseMedico>(url,this.headers)
   }
 }

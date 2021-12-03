@@ -60,14 +60,14 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr *ngIf="usuarios.length === 0">
-                                <div class="alert alert-info" role="alert">
-                                    <h4 class="alert-heading">No se encontraron elementos</h4>
-                                    <p>no hay usuarios registrados</p>
-                                </div>
-                            </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="alert alert-info col-md-12" role="alert" *ngIf="usuarios.length == 0">
+                    <h4 class="alert-heading">
+                        No hay concidencias.
+                    </h4>
+                    <p>No se encontraron concidencias con los criterios de busqueda ingresados.</p>
                 </div>
                 <div *ngIf="txtTermino.value.length === 0">
                     <button (click)="cambiarPagina(-5)" class="btn btn-secondary"

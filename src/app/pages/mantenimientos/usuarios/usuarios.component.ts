@@ -53,13 +53,14 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     this.cargando = true;
     this.usuarioService.cargarUsuarios(this.desde)
       .subscribe(({ total, usuarios }) => {
+        this.cargando = false;
         this.totalUsuarios = total;
         //si la siguiente carga de tantos usuarios es 0, no hace la siguiente carga
         if (usuarios.length !== 0) {
           this.usuarios = usuarios;
         }
+        //alternativa utilizar this.cargandoUsuarios(), volver a recargar los usuarios desde la db
         this.usuariosTemp = usuarios;
-        this.cargando = false;
       });
   }
 

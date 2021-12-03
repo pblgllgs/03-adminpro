@@ -20,7 +20,6 @@ export class HospitalesComponent implements OnInit, OnDestroy {
   public hospitales: Hospital[] = [];
   public cargando: boolean = true;
   private imgSubs:Subscription;
-  private hospitalesTemp:Hospital[] =[];
 
 
   constructor(
@@ -51,10 +50,7 @@ export class HospitalesComponent implements OnInit, OnDestroy {
     this.hospitalService.cargarHospitales()
       .subscribe(hospitales => {
         this.cargando = false;
-        if (hospitales.length !== 0) {
-          this.hospitales = hospitales;
-        }
-        this.hospitalesTemp = hospitales;
+        this.hospitales = hospitales;
       })
   }
 
@@ -79,7 +75,7 @@ export class HospitalesComponent implements OnInit, OnDestroy {
       confirmButtonText: 'Si, borrar!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.hospitalService.borrarHospital(hospital._id)
+        this.hospitalService.eliminarHospital(hospital._id)
           .subscribe(
             (resp) => {
               this.toast.toast('success', 'Hospital eliminado');
@@ -116,7 +112,7 @@ export class HospitalesComponent implements OnInit, OnDestroy {
 
   buscar(termino: string) {
     if (termino.length === 0) {
-      return this.hospitales = this.hospitalesTemp;
+      return this.cargarHospitales();
     }
     this.busquedasService.buscar('hospitales', termino)
       .subscribe((resp:Hospital[]) => {

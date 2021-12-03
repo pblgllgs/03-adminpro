@@ -46,7 +46,7 @@ export class HospitalService {
     return this.http.put<ResponseHospital>(url,{nombre}, this.headers)
   }
 
-  borrarHospital(_id:string){
+  eliminarHospital(_id:string){
     const url = `${baseUrl}/hospitales/${_id}`;
     return this.http.delete(url, this.headers)
   }
