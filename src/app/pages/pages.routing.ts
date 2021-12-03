@@ -14,6 +14,7 @@ import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component'
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
 import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
 import { MedicoComponent } from './mantenimientos/medicos/medico.component';
+import { BusquedaComponent } from './busqueda/busqueda.component';
 
 const routes: Routes = [
   
@@ -23,16 +24,17 @@ const routes: Routes = [
     children: [
       {path: '', component: DashboardComponent, data: {titulo:'Dashboard'}},
       {path: 'account-settings', component: AccountSettingsComponent ,data: {titulo:'Account Settings'}},
-      {path: 'perfil', component: PerfilComponent,data:{titulo:'Perfil'}},
       {path: 'grafica1', component: Grafica1Component,data:{titulo:'Grafica'}},
+      {path: 'buscar/:termino', component: BusquedaComponent,data:{titulo:'Búsqueda'}},
+      {path: 'perfil', component: PerfilComponent,data:{titulo:'Perfil'}},
       {path: 'progress', component: ProgressComponent,data:{titulo:'ProgressBar'}},
       {path: 'promesas', component: PromesasComponent,data: {titulo:'Promesas'}},
       {path: 'rxjs', component: RxjsComponent,data: {titulo:'RXJS'}},
 
-      {path: 'usuarios', component: UsuariosComponent,data: {titulo:'Usuarios'}},
       {path: 'hospitales', component: HospitalesComponent,data: {titulo:'Hospitales'}},
       {path: 'medicos', component: MedicosComponent,data: {titulo:'Medicos'}},
-      {path: 'medico/:id', component: MedicoComponent,data: {titulo:'Medico'}}
+      {path: 'medico/:id', component: MedicoComponent,data: {titulo:'Medico'}},
+      {path: 'usuarios', component: UsuariosComponent,data: {titulo:'Usuarios'}}
     ]
   }
 ];

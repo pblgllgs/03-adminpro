@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Usuario } from '../models/usuario.model';
 import { Medico } from '../models/medico.model';
 import { Hospital } from '../models/hospital.model';
+import { ResponseGlobal } from '../interfaces/ResponseGlobal';
 
 
 const baseUrl = environment.base_url
@@ -14,7 +15,9 @@ const baseUrl = environment.base_url
 })
 export class BusquedasService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+    ) { }
 
   get token(): string {
     return localStorage.getItem('token') || '';
@@ -33,6 +36,11 @@ export class BusquedasService {
       user => new Usuario(user.nombre, user.email, '', user.img, user.google, user.role, user.uid)
     );
   } */
+
+  busquedaGlobal(termino:string){
+    const url = `${baseUrl}/todo/${termino}`;
+    return this.http.get<ResponseGlobal>(url, this.headers);
+  }
 
   buscar(
     tipo: 'usuarios' | 'medicos' | 'hospitales',

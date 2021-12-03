@@ -57,8 +57,8 @@
                 <li class="nav-item hidden-xs-down search-box">
                     <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i
                             class="ti-search"></i></a>
-                    <form class="app-search">
-                        <input type="text" class="form-control" placeholder="Search & enter" />
+                    <form class="app-search" (ngSubmit)="buscar(txtTermino.value)">
+                        <input type="text" class="form-control" placeholder="Buscar..." #txtTermino/>
                         <a class="srh-btn"><i class="ti-close"></i></a>
                     </form>
                 </li>
@@ -73,12 +73,12 @@
                         </div>
                     </a>
                     <div class="
-              dropdown-menu dropdown-menu-right
-              mailbox
-              animated
-              fadeIn
-              fast
-              ">
+                                  dropdown-menu dropdown-menu-right
+                                  mailbox
+                                  animated
+                                  fadeIn
+                                  fast
+                                  ">
                         <ul>
                             <li>
                                 <div class="drop-title">Notifications</div>
@@ -256,12 +256,10 @@
                                     </div>
                                     <div class="u-text">
                                         <h4>
-                                            {{usuario.nombre | slice:0:12}}
-                                            {{(usuario.nombre.length > 12) ?'...':''}}
+                                            {{usuario.nombre | slice:0:12}} {{(usuario.nombre.length > 12) ?'...':''}}
                                         </h4>
                                         <p class="text-muted">
-                                            {{usuario.email | slice:0:15}}
-                                            {{(usuario.email.length > 15) ?'...':''}}
+                                            {{usuario.email | slice:0:15}} {{(usuario.email.length > 15) ?'...':''}}
                                         </p>
                                         <a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View
                                             Profile</a>
