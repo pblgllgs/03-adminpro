@@ -16,9 +16,8 @@ export class LoginComponent implements OnInit {
   public auth2;
 
   public loginForm = this.fb.group({
-    //email: [localStorage.getItem('email'), [Validators.required, Validators.email]],
-    email: ['test@gmail.com', [Validators.required, Validators.email]],
-    password: ['123456', [Validators.required, Validators.minLength(4)]],
+    email: [localStorage.getItem('email'), [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(4)]],
     remember: [false]
   });
 
@@ -77,7 +76,7 @@ export class LoginComponent implements OnInit {
     gapi.load('auth2', () => {
       // Retrieve the singleton for the GoogleAuth library and set up the client.
       this.auth2 = gapi.auth2.init({
-        client_id: '266457039172-qsqol797lvfiqi89vbk6g3168j4al76n.apps.googleusercontent.com',
+        client_id: '266457039172-kn7bevp7kajgu5pkfuassj9sv8fe153n.apps.googleusercontent.com',
         cookiepolicy: 'single_host_origin',
       });
       this.attachSignin(document.getElementById('my-signin2'));
