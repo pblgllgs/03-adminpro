@@ -16,8 +16,9 @@ export class LoginComponent implements OnInit {
   public auth2;
 
   public loginForm = this.fb.group({
-    email: [localStorage.getItem('email'), [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(4)]],
+    //email: [localStorage.getItem('email'), [Validators.required, Validators.email]],
+    email: ['test@gmail.com', [Validators.required, Validators.email]],
+    password: ['123456', [Validators.required, Validators.minLength(4)]],
     remember: [false]
   });
 
@@ -66,8 +67,7 @@ export class LoginComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: err.error.msg,
-          footer: '<a href="">Why do I have this issue?</a>'
+          text: err.error.msg
         });
       }
       );

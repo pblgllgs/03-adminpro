@@ -60,12 +60,10 @@ export class RegisterComponent  {
           timer: 1500
         });
       },(err) => {
-        console.log(err.error.msg)
          Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: err.error.msg,
-          footer: '<a href="">Why do I have this issue?</a>'
+          text: err.error.msg
         });
       });
   }

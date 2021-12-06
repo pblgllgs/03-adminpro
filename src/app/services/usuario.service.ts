@@ -43,6 +43,10 @@ export class UsuarioService {
     }
   }
 
+  get role():'ADMIN_ROLE'| 'USER_ROLE'{
+    return this.usuario.role;
+  }
+
   googleInit() {
     gapi.load('auth2', () => {
       // Retrieve the singleton for the GoogleAuth library and set up the client.
@@ -67,7 +71,7 @@ export class UsuarioService {
       map((resp:any) => {
         const { email, google, nombre, role, img , uid } = resp.usuario;
         this.usuario = new Usuario( nombre, email, '', img, google, role, uid );
-        localStorage.setItem('token', resp.token );
+        this.guardarLocalSotarage(resp.token,resp.menu);
         return true;
       }), 
       catchError(error => of(false))
@@ -75,7 +79,12 @@ export class UsuarioService {
   }
 
   crearUsuario(formData: RegisterForm) {
-    return this.http.post(`${baseUrl}/usuarios/new`, formData);
+    return this.http.post(`${baseUrl}/usuarios/new`, formData)
+      .pipe(
+        tap( (resp:any) => {
+          this.guardarLocalSotarage(resp.token,resp.menu);
+        })
+      );
   }
 
   actualizarPerfil(data:{nombre:string, email:string, role:string}){
@@ -91,7 +100,7 @@ export class UsuarioService {
     return this.http.post(`${baseUrl}/login`, formData)
       .pipe(
         map((resp: any) => {
-          localStorage.setItem('token', resp.token);
+          this.guardarLocalSotarage(resp.token,resp.menu);
         })
       );
   }
@@ -100,12 +109,13 @@ export class UsuarioService {
     return this.http.post(`${baseUrl}/login/google`, { token })
       .pipe(
         map((resp: any) => {
-          localStorage.setItem('token', resp.token);
+          this.guardarLocalSotarage(resp.token,resp.menu);
         })
       );
   }
 
   logout() {
+    localStorage.removeItem('menu');
     localStorage.removeItem('token');
     this.auth2.signOut().then(() => {
       this.ngZone.run(() =>{
@@ -136,6 +146,12 @@ export class UsuarioService {
   guardarUsuario(usuario:Usuario){
     
     return this.http.put(`${baseUrl}/usuarios/${usuario.uid}`, usuario,this.headers);
+  }
+
+  guardarLocalSotarage(token :string, menu:any){
+
+    localStorage.setItem('token',token);
+    localStorage.setItem('menu',JSON.stringify(menu));
   }
 
 }
